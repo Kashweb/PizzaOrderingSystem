@@ -141,3 +141,38 @@ def removePizza(order, name):
             price+=toppings[topping]
     info=order.get_name()+" cost is $"+str(price)
     messagebox.showinfo('Order Cost',info)
+
+def placeOrder(order,name,isPickup,address):
+    order.set_pickup(isPickup)
+    order.set_name(name)
+    order.set_address(address)
+    errors=""
+    if( order.get_name().strip()=="") :
+        errors+="Name to order is required\n" 
+    if(not order.is_pickup() and order.get_address().strip()=="") :
+        errors+="Address to order is required to non pickup orders\n" 
+    if(len(order.get_pizzas())==0):
+        errors+="Pizza is not selected to order\n" 
+        
+    if(not errors==""):
+        messagebox.showerror('Errors',errors)
+    else:
+        price=0;
+        
+        for pizza in order.get_pizzas():
+            price+=pizza.get_cost()
+            for sause in pizza.get_sauses():
+                price+=sauses[sause]
+            for topping in pizza.get_toppings():
+                price+=toppings[topping]
+        info="Name:"+order.get_name()+ "\n"
+        info+="Address:"+order.get_address()+"\n"
+        info+="Pickup:"
+        if(order.is_pickup):
+            info+="Yes\n"
+        else:
+            info+="No\n"
+         
+        info+=" Total Cost of order: $"+str(price)
+        messagebox.showinfo('Order Cost',info)
+        messagebox.showinfo('Order Delivery Time',str(random.randint(15,25))+" minutes")
