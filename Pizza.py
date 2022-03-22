@@ -81,3 +81,38 @@ class Order(object):
     
     def set_pickup(self, pickup):
         self.pickup = pickup
+
+
+
+class Pizza(object):
+
+    def __init__(self, name, cost):
+        self.name = name
+        self.cost = cost
+        self.sauses = []
+        self.toppings = []
+        
+    def get_name(self):
+        return self.name
+    
+    def get_sauses(self):
+        return self.sauses
+    
+    def get_toppings(self):
+        return self.toppings;
+    
+    def add_topping(self, topping):
+        if(topping not in self.toppings):
+            self.toppings.append(topping)
+    def remoce_topping(self, topping):
+        if(topping  in self.toppings):
+            del self.toppings[topping]
+            
+    def add_sause(self, sause):
+        if(sause not in self.sauses):
+            self.sauses.append(sause)
+    def remove_sause(self, sause):
+        if(sause  in self.sauses):
+            del self.sauses[sause]
+    def get_cost(self):
+        return self.cost
