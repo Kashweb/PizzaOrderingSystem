@@ -161,8 +161,8 @@ def placeOrder(order,name,isPickup,address):
         
         for pizza in order.get_pizzas():
             price+=pizza.get_cost()
-            for sause in pizza.get_sauses():
-                price+=sauses[sause]
+            for sause in pizza.get_sauces():
+                price+=sauces[sause]
             for topping in pizza.get_toppings():
                 price+=toppings[topping]
         info="Name:"+order.get_name()+ "\n"
@@ -176,3 +176,61 @@ def placeOrder(order,name,isPickup,address):
         info+=" Total Cost of order: $"+str(price)
         messagebox.showinfo('Order Cost',info)
         messagebox.showinfo('Order Delivery Time',str(random.randint(15,25))+" minutes")
+        
+
+if __name__ == '__main__':      
+    window = tkinter.Tk()
+    window.title("Pizza Ordering System")
+    window.geometry('650x600')
+    r = 0
+    lbl = Label(window, text="Name:")
+    lbl.grid(column=0, row=r)    
+    nameText = Text(window, width=30, height=1.5)
+    nameText.grid(column=1, row=r)
+    r += 1
+    
+    lbl = Label(window, text="Address:")
+    lbl.grid(column=0, row=r)    
+    address = scrolledtext.ScrolledText(window, width=30, height=5)
+    address.grid(column=1, row=r)
+    r += 1
+    
+    chk_state = BooleanVar()
+    chk_state.set(False)  # set check state
+    chk = Checkbutton(window, text='Pickup', var=chk_state) 
+    chk.grid(column=0, row=r)
+    r += 1
+    
+    order = Order("", "", "");
+    window.grid_rowconfigure(10, weight=0)
+   
+    for i in range(len(pizzas_available)):
+        pizza = pizzas_available[i];
+        name = pizza["name"]
+        price = pizza["price"]
+        Label(text=name, width=10).grid(row=r, column=0)
+        
+        mb = Menubutton (text="")
+        mb.grid(row=r, column=1)
+        mb.menu = Menu (mb, tearoff=0)
+        mb["menu"] = mb.menu
+        
+        for key,value in toppings.items():
+            mb.menu.add_checkbutton(label=key, variable=key,command=lambda:updateToppings(order,name,key))
+        
+        smb = Menubutton (text="")
+        smb.grid(row=r, column=2)
+        smb.menu = Menu (smb, tearoff=0)
+        smb["menu"] = smb.menu
+        
+        for key1,value in sauses.items():
+            smb.menu.add_checkbutton(label=key1, variable=key1,command=lambda:updateSauses(order,name,key1))
+        
+        btn = Button(text="Add", command=lambda:addPizza(order,name,price))
+        btn.grid(row=r, column=3);
+        btn = Button(text="Remove", command=lambda:removePizza(order, name))
+        btn.grid(row=r, column=4);
+        r = r + 1
+    btn = Button(text="Place Order", command=lambda:placeOrder(order,nameText.get("1.0","end-1c"),chk_state.get(),address.get("1.0","end-1c")))
+    btn.grid(row=r, column=0)
+    window.mainloop()
