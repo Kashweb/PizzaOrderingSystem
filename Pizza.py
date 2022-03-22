@@ -89,14 +89,14 @@ class Pizza(object):
     def __init__(self, name, cost):
         self.name = name
         self.cost = cost
-        self.sauses = []
+        self.sauces = []
         self.toppings = []
         
     def get_name(self):
         return self.name
     
-    def get_sauses(self):
-        return self.sauses
+    def get_sauces(self):
+        return self.sauces
     
     def get_toppings(self):
         return self.toppings;
@@ -109,11 +109,11 @@ class Pizza(object):
             del self.toppings[topping]
             
     def add_sause(self, sause):
-        if(sause not in self.sauses):
-            self.sauses.append(sause)
+        if(sause not in self.sauces):
+            self.sauces.append(sause)
     def remove_sause(self, sause):
-        if(sause  in self.sauses):
-            del self.sauses[sause]
+        if(sause  in self.sauces):
+            del self.sauces[sause]
     def get_cost(self):
         return self.cost
 
@@ -123,7 +123,19 @@ def addPizza(order, name,price):
     price=0;
     for pizza in order.get_pizzas():
         price+=pizza.get_cost()
-        for sause in pizza.get_sauses():
+        for sause in pizza.get_sauces():
+            price+=sauces[sause]
+        for topping in pizza.get_toppings():
+            price+=toppings[topping]
+    info=order.get_name()+" cost is $"+str(price)
+    messagebox.showinfo('Order Cost',info)
+
+def removePizza(order, name):
+    order.remove_pizza(name)
+    price=0;
+    for pizza in order.get_pizzas():
+        price+=pizza.get_cost()
+        for sause in pizza.get_sauces():
             price+=sauces[sause]
         for topping in pizza.get_toppings():
             price+=toppings[topping]
