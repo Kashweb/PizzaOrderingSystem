@@ -176,7 +176,48 @@ def placeOrder(order,name,isPickup,address):
         info+=" Total Cost of order: $"+str(price)
         messagebox.showinfo('Order Cost',info)
         messagebox.showinfo('Order Delivery Time',str(random.randint(15,25))+" minutes")
+
+def updateToppings(order,name,topping):
+    pizza=order.get_pizza(name)
+    if(None==pizza):
+        pass
+        #messagebox.showinfo('Error',"First Add the pizza,then add toppings")
+    else:
+        if(topping not in pizza.get_toppings()):
+            pizza.add_topping(topping)
+        else:
+            pizza.remove_topping(topping)
+        price=pizza.get_cost()
         
+        for sause in pizza.get_sauces():
+            price+=sauces[sause]
+            
+        for topping in pizza.get_toppings():
+            price+=toppings[topping]
+            
+        info=name+" cost is $"+str(price)
+        messagebox.showinfo('Pizza Cost',info)
+
+def updatesauces(order,name,sause):
+    pizza=order.get_pizza(name)
+    if(None==pizza):
+        pass
+    else:
+        if(sause not in pizza.get_sauces()):
+            pizza.add_sause(sause)
+        else:
+            pizza.remove_sause(sause)
+        
+        price=pizza.get_cost()
+        
+        for sause in pizza.get_sauces():
+            price+=sauces[sause]
+        
+        for topping in pizza.get_toppings():
+            price+=toppings[topping]
+        
+        info=name+" cost is $"+str(price)
+        messagebox.showinfo('Pizza Cost',info)
 
 if __name__ == '__main__':      
     window = tkinter.Tk()
@@ -223,8 +264,8 @@ if __name__ == '__main__':
         smb.menu = Menu (smb, tearoff=0)
         smb["menu"] = smb.menu
         
-        for key1,value in sauses.items():
-            smb.menu.add_checkbutton(label=key1, variable=key1,command=lambda:updateSauses(order,name,key1))
+        for key1,value in sauces.items():
+            smb.menu.add_checkbutton(label=key1, variable=key1,command=lambda:updatesauces(order,name,key1))
         
         btn = Button(text="Add", command=lambda:addPizza(order,name,price))
         btn.grid(row=r, column=3);
