@@ -116,3 +116,16 @@ class Pizza(object):
             del self.sauses[sause]
     def get_cost(self):
         return self.cost
+
+def addPizza(order, name,price):
+    pizza=Pizza(name,price)    
+    order.add_pizza(pizza)
+    price=0;
+    for pizza in order.get_pizzas():
+        price+=pizza.get_cost()
+        for sause in pizza.get_sauses():
+            price+=sauces[sause]
+        for topping in pizza.get_toppings():
+            price+=toppings[topping]
+    info=order.get_name()+" cost is $"+str(price)
+    messagebox.showinfo('Order Cost',info)
