@@ -1,7 +1,7 @@
 # PizzaOrderingSystem
 A Basic Pizza ordering assignment for Bootcamp
 
-some images of what the final product looks like at attached below.
+some images of what the final product looks like are attached below.
 
 
 1. Add the name, address, select the pizza with an option to customise the toppings..
